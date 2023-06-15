@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 import * as Styled from './RateTable.styled'
 import { Rate, RateStatus } from '../../models/Rate'
 
@@ -19,7 +19,7 @@ export function RateTable({ rates, isFavoritesList, onClick, favoriteRates, mult
     if (isFavoritesList) {
       return <Styled.RateTableButton onClick={() => onClick && onClick(rate)}>Zrušit</Styled.RateTableButton>
     }
-    return favoriteRates?.includes(rate) ? (
+    return favoriteRates && favoriteRates.find(rateName => rateName.shortName === rate.shortName) ? (
       <Styled.RateTableBodyItem />
     ) : (
       <Styled.RateTableButton onClick={() => onClick && onClick(rate)}>Oblíbená</Styled.RateTableButton>

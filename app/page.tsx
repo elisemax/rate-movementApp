@@ -1,5 +1,5 @@
 'use client'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { RateTable } from '../components/rateTable/RateTable'
 import { Container } from '../components/container/Container'
 import { Title } from '../components/title/Title'
@@ -18,6 +18,11 @@ export default function page() {
   const [favoriteRates, setFavoriteRates] = useLocalStorage<Rate[]>('rates', [])
   const [rateStatus, setRateStatus] = useState<RateStatus>(getInitRateStatus(searchParams))
   const [currentMultiplier, setCurrentMultiplier] = useState(getCurrentMove(searchParams))
+
+  useEffect(() => {
+    if (favoriteRates.length === 0) return
+    router.push(`/?move=${currentMultiplier}`)
+  }, [favoriteRates])
 
   const handleFavorite = (rate: Rate) => {
     setFavoriteRates([...favoriteRates, rate])
